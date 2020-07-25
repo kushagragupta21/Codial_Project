@@ -6,6 +6,9 @@ const port = 8000; //Generally Website run on port 80
 
 
 
+//use express router
+app.use('/' , require('./routes'));
+
 
 
 
