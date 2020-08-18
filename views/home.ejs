@@ -9,13 +9,10 @@
 
     <h4>Posts</h4>
     
-    
     <form action="/posts/create" id="new-post-form" method="POST">
         <textarea name="content"  cols="30" rows="3" placeholder="Type Here...."></textarea>
         <input type="submit" value="Post">
     </form>
-
-    
 
 
 <div id="view-posts">
@@ -24,8 +21,8 @@
     <% for(post of posts) { %>
     <li> <h4><%= post.content %> </h4>
         <br> <small> <%=post.user.name%> </small></li>
-<!-- Yeh kaam ab krne lga TA ki help li thi post.user.name -->
+<!-- Yeh AB kaam nahi kr rha h TA ki hwlp li post.user.name -->
         <% } %>
-</ul>
+    </ul>
 </div>
 </section>
