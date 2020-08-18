@@ -12,4 +12,4 @@ Post.create({
     return res.redirect('back');
 });
 
-}
+} 
