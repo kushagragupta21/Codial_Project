@@ -22,6 +22,7 @@ module.exports.home = function(req,res){
             title: "Codial | Home",
             posts: posts,
             
+            
         }); 
 
     })

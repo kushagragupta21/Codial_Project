@@ -9,11 +9,11 @@
         </div>
         <div class="auth-links">
             <ul>
-    <%  if (locals.users)  {%>  
+    <%  if (locals.user)  {%>  
         <!-- lacals and user are same things -->
         
         <li>
-            <a href="/users/profile" class="float"> <%= users.name %> </a>
+            <a href="/users/profile" class="float"> <%= user.name %> </a>
         </li>
 
         <li>
