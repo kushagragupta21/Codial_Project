@@ -9,4 +9,6 @@ router.post('/create' , passport.checkAuthentication, postController.create);
 //checkAuthentication is a function which we will created at config/passport-local-stretegy.js
 
 
+router.get('/destroy/:id', passport.checkAuthentication,postController.destroy);
+
 module.exports =  router;

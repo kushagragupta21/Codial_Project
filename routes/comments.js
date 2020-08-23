@@ -8,5 +8,6 @@ const passport = require('passport');
 router.post('/create' , passport.checkAuthentication, commentsController.create);
 //checkAuthentication is a function which we will created at config/passport-local-stretegy.js
 
+router.get('/destroy/:id', passport.checkAuthentication,commentsController.destroy);
 
 module.exports =  router;
