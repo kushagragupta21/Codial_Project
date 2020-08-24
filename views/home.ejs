@@ -1,9 +1,8 @@
 <link rel="stylesheet" href="/css/home.css">
-<h1>
-    Codial / <%= title %>
-</h1>
+
 
 <div id="home-container">
+
     <section id="feed-posts">
 
 
@@ -22,10 +21,23 @@
             <h4>Yours posts</h4>
             <ul>
                 <% for(post of posts) { %>
-                    <%- include('_post') %>
-                
+                <%- include('_post') -%>
+
                 <% } %>
             </ul>
         </div>
+    </section>
+
+
+
+    <section id="user-friends">
+
+        <h4>Friends</h4>
+        <% for(u of all_users) { %>
+        <p>
+            <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+        </p>
+
+        <% } %>
     </section>
 </div>

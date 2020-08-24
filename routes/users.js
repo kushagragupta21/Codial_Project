@@ -9,8 +9,8 @@ const { checkAuthentication } = require('../config/passport-local-strategy');
 
 
 
-router.get('/profile' ,passport.checkAuthentication, usersController.profile);
-
+router.get('/profile/:id' ,passport.checkAuthentication, usersController.profile);
+router.post('/update/:id' ,passport.checkAuthentication, usersController.update);
 
 router.get('/sign-up', usersController.signUp);
 

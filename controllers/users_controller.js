@@ -4,11 +4,27 @@ module.exports.profile = function(req,res){
 
     // res.end('<h1>User Profile</h1>');
 
-    return res.render('user_profile',{
-        title: "profile"
+    User.findById(req.params.id, function(err,user){
+        return res.render('user_profile',{
+            title: " User profile",
+            profile_user: user
+        });
     });
 
+    
 
+
+}
+
+
+module.exports.update =function(req,res){
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body,function(err,user){
+            return res.redirect('back');
+        })
+    }else{ //If user fiddling my website
+        return res.staus(401).send('Unauthorised');
+    }
 }
 
 //render the sign Up page
