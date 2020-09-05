@@ -22,6 +22,11 @@ const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
 const e = require('express');
 
+//for flash messages
+const flash = require('connect-flash');
+
+//requiring own custom middleware
+const customMware = require('./config/middleware');
 
 
 
@@ -86,6 +91,8 @@ app.use(passport.session());
 app.use(passport.setAunthenticatdUser);
 
 
+app.use(flash());
+app.use(customMware.setFlash);
 
 //use express router
 app.use('/' , require('./routes'));

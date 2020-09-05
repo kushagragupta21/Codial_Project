@@ -18,6 +18,8 @@ router.get('/sign-in', usersController.signIn);
  
 router.post ('/create', usersController.create);
 
+// router.get ('/profile',usersController.profile);
+
 //Use passport as a middleware to authenticate
 router.post('/create-session',passport.authenticate(
     'local', 

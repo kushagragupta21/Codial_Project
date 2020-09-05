@@ -2,37 +2,24 @@ const Post = require('../models/post');
 
 const User = require('../models/user');
 
-module.exports.home = function(req,res){
-    // return res.end('<h1>Express is up for Codial</h1>')
-   
-    // console.log(req.cookies); //req the cokkie from browser
-    // res.cookie('user_id' , 25); //to change the value of cookie
+module.exports.home = async function(req,res){
     
-    // Post.find({},function(err,posts){
-    //     return res.render('home' ,{
-    //         title: "Codial | Home",
-    //         posts: posts
 
-    //     }); 
-    // });
-
+    try{
+        
     // populate the user of each post
-    Post.find({})
+
+    let posts = await Post.find({})
     .populate('user')
     .populate({
             path: 'comments',
             populate: {
                 path: 'user'
             }
-        })
+        });
     
-    .exec(function(err,posts){
-        // if(err)
-        // {
-        //     console.log(err);
-        //     return;
-        // }
-        User.find({},function(err,users){
+
+       let users = await User.find({});
             return res.render('home',{
                 title: "Codial | Home",
                 posts: posts,
@@ -40,12 +27,19 @@ module.exports.home = function(req,res){
                              
             }); 
     
-        });
-
         
-    })
-    
-    
 
+    }catch(err){
+        console.log('Error',err);
+        return;
+    }
+
+   
 
 }
+//using then
+//Post.find({}).populate('comments').then(function());
+
+//using populate
+//let posts = Post.find({}).populate('comments').exec();
+//posts.then();
