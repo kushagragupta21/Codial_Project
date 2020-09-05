@@ -20,7 +20,7 @@ passport.use(new LocalStrategy({
             }
 
             //if user not found or password not matches with the password user Enter
-            if(!User || user.password != password){
+            if(!user || user.password != password){
                 console.log('Invalid Username/Password');
                 return done(null,false);
             }
