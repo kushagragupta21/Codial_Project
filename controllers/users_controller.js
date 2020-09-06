@@ -1,5 +1,9 @@
 const User = require('../models/user'); //require of user file for find() function
 
+
+const fs = require('fs');
+const path = require('path');
+
 module.exports.profile = function(req,res){
 
     // res.end('<h1>User Profile</h1>');
@@ -17,13 +21,50 @@ module.exports.profile = function(req,res){
 }
 
 
-module.exports.update =function(req,res){
-    if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id, req.body,function(err,user){
+module.exports.update =async function(req,res){
+
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id, req.body,function(err,user){
+    //         req.flash('success','Updated !');
+    //         return res.redirect('back');
+    //     })
+    // }else{ //If user fiddling my website
+    //     req.flash('error','Unauthorized');
+    //     return res.staus(401).send('Unauthorised');
+    // }
+
+    if(req.user.id ==req.params.id){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if (err) {console.log('****Multer Error !',err)}
+                
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+
+                    }
+
+                    // this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename; 
+
+                }
+                user.save();
+                return res.redirect('back');
+                
+            });
+        }catch(err){
+            req.flash('error',err);
             return res.redirect('back');
-        })
-    }else{ //If user fiddling my website
-        return res.staus(401).send('Unauthorised');
+        }
+    }else{
+        req.flash('error','Unauthorized');
+        return res.status(401).send('Unauthorized');
+
     }
 }
 
@@ -65,6 +106,7 @@ return res.render('user_sign_in', {
 //get the sign up data
 module.exports.create = function(req,res){
     if(req.body.password != req.body.confirm_password){
+        req.flash('error','password and confirm Password not Matches');
         return res.redirect('back');
     }
 
@@ -75,11 +117,12 @@ module.exports.create = function(req,res){
         if(!user){  //if user not exist then we create it
             User.create(req.body, function(err,user){
                 if(err){console.log('error in creating user while signing'); return}
-                
+                req.flash('error',err);
                 return res.redirect('/users/sign-in');
             })
        
         } else{//meaning if user is already present sents back to sign up page
+            req.flash('error','Email Already registered Try Different One');
             return res.redirect('back');
         }
 

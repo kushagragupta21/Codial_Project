@@ -23,7 +23,8 @@ passport.use(new LocalStrategy({
 
             //if user not found or password not matches with the password user Enter
             if(!user || user.password != password){
-                console.log('Invalid Username/Password');
+                // console.log('Invalid Username/Password');
+                req.flash('error','Invalid Username/Password')
                 return done(null,false);
             }
 

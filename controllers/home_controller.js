@@ -10,6 +10,7 @@ module.exports.home = async function(req,res){
     // populate the user of each post
 
     let posts = await Post.find({})
+    .sort('-createdAt') //sort decending (means last post created shown first) to creation time
     .populate('user')
     .populate({
             path: 'comments',
